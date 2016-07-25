@@ -90,12 +90,14 @@ bookmark file from current bookmark menu list."
    (list
     (let ((default-directory (or bmk-to-bmk-default-directory
                                  default-directory)))
-      (read-file-name "New Bookmark File: "))))
-  (with-temp-buffer
-    (let (bookmark-alist)
-      (bookmark-save nil filename)))
+      (read-file-name "Bookmark File: "))))
+  (when (not (file-exists-p filename))
+    (message "Creating new bookmark file at %s" filename)
+    (with-temp-buffer
+      (let (bookmark-alist)
+        (bookmark-save nil filename))))
   (when (or link (equal current-prefix-arg '(16)))
-    (let* ((name (read-from-minibuffer "Bookmark name: "))
+    (let* ((name (read-from-minibuffer "Bookmark Link Name: "))
            (record (bmk-to-bmk-make-record filename)))
       (bookmark-store name record t)))
   (when (or current (equal current-prefix-arg '(4)))
