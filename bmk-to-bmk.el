@@ -33,7 +33,7 @@
 (defgroup bmk-to-bmk nil
   "Manage jumping between/bookmarking multiple bookmark files."
   :group 'bookmark)
-
+(defvar bookmark-alist)
 (defvar bmk-to-bmk-stack nil)
 
 ;; Create bookmark record for bookmark-menu-list from current default
@@ -45,7 +45,7 @@
   (push bookmark-default-file bmk-to-bmk-stack)
   (bookmark-save)
   (setq bookmark-default-file (bookmark-get-filename bmk-record))
-  (setq boomkark-alist nil)
+  (setq bookmark-alist nil)
   (let (bookmarks-already-loaded nil)
     (bookmark-maybe-load-default-file))
   (bookmark-bmenu-list))
