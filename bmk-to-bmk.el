@@ -46,7 +46,7 @@
   (bookmark-save)
   (setq bookmark-default-file (bookmark-get-filename bmk-record))
   (setq bookmark-alist nil)
-  (let (bookmarks-already-loaded nil)
+  (let (bookmarks-already-loaded)
     (bookmark-maybe-load-default-file))
   (bookmark-bmenu-list))
 
@@ -57,7 +57,7 @@
     (bookmark-save)
     (setq bookmark-default-file (pop bmk-to-bmk-stack))
     (setq bookmark-alist nil)
-    (let (bookmarks-already-loaded nil)
+    (let (bookmarks-already-loaded)
       (bookmark-maybe-load-default-file))
     (bookmark-bmenu-list)))
 
