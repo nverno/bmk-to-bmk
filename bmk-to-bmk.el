@@ -62,9 +62,10 @@
     (bookmark-maybe-load-default-file))
   (bookmark-bmenu-list))
 
-(defun bmk-to-bmk-make-record (filename)
-  `((filename . ,filename)
-    (handler . bmk-to-bmk-handler)))
+(defun bmk-to-bmk-make-record (filename &optional name)
+  (cons (or name nil)
+   `((filename . ,filename)
+     (handler . bmk-to-bmk-handler))))
 
 ;; ------------------------------------------------------------
 ;;* User Functions
@@ -99,7 +100,7 @@ bookmark file from current bookmark menu list."
   (when (or link (equal current-prefix-arg '(16)))
     (let* ((name (read-from-minibuffer "Bookmark Link Name: "))
            (record (bmk-to-bmk-make-record filename)))
-      (bookmark-store name record t)))
+      (bookmark-store name (cdr record) t)))
   (when (or current (equal current-prefix-arg '(4)))
     (bmk-to-bmk-handler
      (bmk-to-bmk-make-record filename))))
