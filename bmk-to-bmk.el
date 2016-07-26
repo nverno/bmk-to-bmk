@@ -123,7 +123,7 @@ bookmark file from current bookmark menu list."
 (defun bmk-to-bmk-toggle-highlight ()
   "Toggle highlighting of bookmark entries in *Bookmark List* buffer."
   (interactive)
-  (if bmk-to-bmk-highlighted
+  (if (not bmk-to-bmk-highlighted)
       (progn
         (bmk-to-bmk-add-highlight bmk-to-bmk-bookmark-regexp
                                   'bmk-to-bmk-bookmark-highlight)
