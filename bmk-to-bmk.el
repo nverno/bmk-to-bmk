@@ -32,7 +32,8 @@
 
 (defgroup bmk-to-bmk nil
   "Manage jumping between/bookmarking multiple bookmark files."
-  :group 'bookmark)
+  :group 'bookmark
+  :prefix "bmk-to-bmk-")
 
 ;; ------------------------------------------------------------
 ;;* User Variables
@@ -42,6 +43,17 @@
   :group 'bmk-to-bmk
   :type 'file)
 
+(defcustom bmk-to-bmk-bookmark-regexp "^.*\\.bmk$"
+  "Regexp to match bookmark entries."
+  :group 'bmk-to-bmk
+  :type 'regexp)
+ 
+(defface bmk-to-bmk-bookmark-highlight
+  '((((background dark)) (:background "light blue" :foreground "black"))
+    (t (:background "light blue")))
+  "Face to highlight bookmark entries (.bmk)."
+  :group 'bmk-to-bmk)
+ 
 ;; ------------------------------------------------------------
 ;;* Internal
 (defvar bookmark-alist)
@@ -105,6 +117,33 @@ bookmark file from current bookmark menu list."
     (bmk-to-bmk-handler
      (bmk-to-bmk-make-record filename))))
 
+;; Font-lock
+(defvar-local bmk-to-bmk-highlighted nil)
+
+(defun bmk-to-bmk-toggle-highlight ()
+  "Toggle highlighting of bookmark entries in *Bookmark List* buffer."
+  (interactive)
+  (if bmk-to-bmk-highlighted
+      (progn
+        (bmk-to-bmk-add-highlight bmk-to-bmk-highlight-regexp
+                                  'bmk-to-bmk-bookmark-highlight)
+        (setq bmk-to-bmk-highlighted t))
+    (bmk-to-bmk-remove-highlight)
+    (setq bmk-to-bmk-highlighted nil)))
+
+(defun bmk-to-bmk-add-highlight (regexp face)
+  "Highlight bookmark entries in *Bookmark List* buffer."
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward regexp nil t)
+      (let ((overlay (make-overlay (match-beginning 0) (match-end 0))))
+        (overlay-put overlay 'face face))
+      (goto-char (match-end 0)))))
+
+(defun bmk-to-bmk-remove-highlight ()
+  "Remove highlighting of bookmark entries."
+  (remove-overlays))
+
 ;; ------------------------------------------------------------
 ;;* Minor Mode
 ;; To jump between bookmark files, and bookmark as such.
@@ -120,7 +159,8 @@ the mode, `toggle' toggles the state.
 When bmk-to-bmk mode is enabled, bookmark menus can be both bookmarked
 and jumped between."
   :keymap '(((kbd "b") . bmk-to-bmk-back)
-            ((kbd "n") . bmk-to-bmk-new))
+            ((kbd "n") . bmk-to-bmk-new)
+            ((kbd "f") . bmk-to-bmk-toggle-highlight))
   :lighter "B2B"
   (setq-local bookmark-make-record-function 'bmk-to-bmk-record-function))
 
