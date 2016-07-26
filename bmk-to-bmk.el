@@ -125,7 +125,7 @@ bookmark file from current bookmark menu list."
   (interactive)
   (if bmk-to-bmk-highlighted
       (progn
-        (bmk-to-bmk-add-highlight bmk-to-bmk-highlight-regexp
+        (bmk-to-bmk-add-highlight bmk-to-bmk-bookmark-regexp
                                   'bmk-to-bmk-bookmark-highlight)
         (setq bmk-to-bmk-highlighted t))
     (bmk-to-bmk-remove-highlight)
