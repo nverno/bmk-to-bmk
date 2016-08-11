@@ -5,11 +5,6 @@
 ;; Copyright (C) 2016, Noah Peart, all rights reserved.
 ;; Created: 24 July 2016
 
-;;; Commentary:
-
-;;  Minor mode to manage jumping b/w bookmark files, displaying bookmark
-;;  menus.
-
 ;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -25,6 +20,11 @@
 ;; along with this program; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
 ;; Floor, Boston, MA 02110-1301, USA.
+
+;;; Commentary:
+
+;;  Minor mode to manage jumping b/w bookmark files, displaying bookmark
+;;  menus.
 
 ;;; Code:
 
